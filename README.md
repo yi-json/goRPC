@@ -64,40 +64,45 @@ Steps:
     2. Run `protoc --go_out=. address_book.proto` to generate a `*.pb.go` file
 
 
+#### What does the `*pb.go` file contain?
 
-What does the `*pb.go` file contain?
-    1. Go structs for every message in your `proto`
-        Example:
-        ```proto
-        message Person {
-            string name = 1;
-            int32 id = 2;
-        }
-        ```
-        Becomes:
-            ```go
-            type Person struct {
-                Name string
-                Id   int32
-            }
-            ```
-        You can now write:
-        ```go
-        p := &tutorial.Person{
-            Name: "JSON",
-            Id: 123
-        }
-        ```
-    2. Serialization and Deserialization
-        The `*.pb.go` file includes methods to convert your structs into efficient, cross-language protobuf bytes
-            ```go
-            data, err := proto.Marshal(p)
-            ```
-        And decode them:
-            ```go
-            var out Person;
-            proto.Unmarshal(data, &out)
-            ```
+##### Go structs for every message in your `proto`
+Take a proto definition:
+```proto
+message Person {
+    string name = 1;
+    int32 id = 2;
+}
+```
+
+Go-generated code becomes:
+```go
+type Person struct {
+    Name string
+    Id   int32
+}
+```
+
+You can now write:
+```go
+p := &tutorial.Person{
+    Name: "JSON",
+    Id: 123
+}
+```
+
+
+#### Serialization and Deserialization
+The `*.pb.go` file includes methods to convert your structs into efficient, cross-language protobuf bytes
+```go
+data, err := proto.Marshal(p)
+```
+
+And decode them:
+```go
+var out Person;
+proto.Unmarshal(data, &out)
+```
 
         
 
