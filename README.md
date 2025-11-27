@@ -5,6 +5,45 @@ This page is for my reference whenever I need to remind myself on details in the
 
 ## Go
 
+### Function Return Types
+In Go, functions can return multiple return values - standard for handling data and errors
+1. `error` (Status Only)
+```go
+func (c *InMemoryCluster) UpdateHeartbeat(nodeID string) error { ... }
+
+err := c.UpdateHeartbeat("worker-1")
+if err != nil {
+    // handle failure
+}
+```
+
+2. `(*Node, error)` (Data + Status)
+```go
+func (c *InMemoryCluster) GetNode(nodeID string) (*Node, error) { ... }
+
+node, err := c.GetNode("worker-1")
+if err != nill {
+    // handle failure
+}
+fmt.Println(node.IP)
+```
+
+
+### Method Receiver
+In Go, `c` is the **Method Receiver**. It is the exact equivalent of `this` in Java/C++ or `self` in Python
+
+Example:
+```go
+func (c *InMemoryCluster) GetNode(nodeID string) ...
+```
+* `c` is a variable name referring to the specific instance of the struct you are calling the function on
+* `*InMemoryCluster` is the type. By using a pointer (`*`), we ensure that we are modifying the actual object,not just a copy of it
+
+**Disclaimer: Method Receiver are not universally called "c"**
+* Go conventions prefer single-letter abbreviations that match the struct name.
+* Since the struct is `InMemoryCluster` (or just "Cluster"), we name the receiver `c`
+* If the struct were named `Server`, we would likely name it `s`
+
 ### Package Names
 Usually director name = package name, **EXCEPT** when you want to build an executable program.
 
