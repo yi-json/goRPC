@@ -51,8 +51,8 @@ The `=1`, `=2` markers on each element identify the unique "tag" that field uses
 Next, we need to generate the classes you'll need to read and write `AddressBook` (and also `Person` and `PhoneNumber`) messages. We do this by running the protocol buffer compiler `protoc` on your `.proto`
 
 **Goal**: We want to turn our `.proto` definitions into **real, usable Go-code**
-    * A `.proto` is not **executable** - just a schema
-    * `address_book.pb.go` is the compiled output that your Go program actually imports and uses at runtime
+* A `.proto` is not **executable** - just a schema
+* `address_book.pb.go` is the compiled output that your Go program actually imports and uses at runtime
 
 Protobuf workflow:
 ```
@@ -60,8 +60,11 @@ Protobuf workflow:
 ```
 
 Steps:
-    1. `cd` into the directory that contains the `.proto` file
-    2. Run `protoc --go_out=. address_book.proto` to generate a `*.pb.go` file
+1. `cd` into the directory that contains the `.proto` file
+2. Run this command to generate a `*.pb.go` file
+```bash
+protoc --go_out=. <PROTO_FILE_NAME>.proto
+```
 
 
 #### What does the `*pb.go` file contain?
