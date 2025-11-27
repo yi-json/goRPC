@@ -3,6 +3,13 @@ Hello future me and other curious developers snooping.
 
 This page is for my reference whenever I need to remind myself on details in the world of Golang.
 
+## Go
+
+### Package Names
+Usually director name = package name, **EXCEPT** when you want to build an executable program.
+
+If a file contains `func main()`, the package declaration at the top **MUST** be `package main`, regardless of the directory name
+
 ## Protocol Buffers (Protobufs)
 
 ### `go_package`
@@ -60,10 +67,21 @@ Protobuf workflow:
 ```
 
 Steps:
-1. `cd` into the directory that contains the `.proto` file
-2. Run this command to generate a `*.pb.go` file
+1. `cd` to the project root
+2. Install the compiler and gRPC plugins
 ```bash
-protoc --go_out=. <PROTO_FILE_NAME>.proto
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+```
+3. Add it to your `PATH`
+```bash
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
+4. Run protoc to generate a `*.pb.go` file in the same directory as the `.proto` file
+```bash
+protoc --go_out=. --go_opt=paths=source_relative \
+    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+    api/proto/v1/scheduler.proto
 ```
 
 
